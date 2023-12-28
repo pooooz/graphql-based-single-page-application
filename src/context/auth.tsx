@@ -28,9 +28,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter()
 
-  console.log(pathname);
-  
-
   useEffect(() => {
     if (!isAuth) {
       if (!PublicRoutes.includes(pathname as Routes)) {

@@ -28,8 +28,12 @@ export interface Loos {
 }
 
 export const useLoos = (filters: { text: string }) => {
+  let origin = "";
+  if (typeof window !== "undefined") {
+    origin = window.location.origin;
+  }
   const graphqlClient = useMemo(
-    () => new GraphQLClient("https://www.toiletmap.org.uk/api"),
+    () => new GraphQLClient(`${origin}/api`),
     []
   );
 
