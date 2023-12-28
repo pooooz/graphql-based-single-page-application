@@ -4,7 +4,7 @@ const Login = () => {
  
 
   return (
-    <div className="dark:bg-gray-800 h-screen overflow-hidden flex items-center justify-center">
+    <div className="h-screen overflow-hidden flex items-center justify-center">
       <div className="bg-white lg:w-6/12 md:7/12 w-8/12 shadow-3xl rounded-xl">
         <div className="bg-gray-800 shadow shadow-gray-200 absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full p-4 md:p-8">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="#FFF">
