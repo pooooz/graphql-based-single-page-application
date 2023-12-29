@@ -13,7 +13,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 interface AuthContextProps {
   isAuth: boolean;
@@ -23,13 +23,27 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
+const getInitialAuthValue = () => {
+  if (typeof window !== "undefined") {
+    const storedUser = window.localStorage.getItem("isAuth");
+    if (storedUser) {
+      return JSON.parse(storedUser) as boolean;
+    }
+  }
+  return false;
+};
+
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(() => getInitialAuthValue());
   const pathname = usePathname();
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
+    if (isAuth) {
+      localStorage.setItem("isAuth", JSON.stringify(isAuth));
+    }
     if (!isAuth) {
+      localStorage.removeItem("isAuth");
       if (!PublicRoutes.includes(pathname as Routes)) {
         router.replace(Routes.LOGIN);
       }
@@ -39,7 +53,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const handleLogout = useCallback(() => {
     setIsAuth(false);
     router.replace(Routes.LOGIN);
-  }, [router]);  
+  }, [router]);
 
   const handleAuth = useCallback(() => {
     setIsAuth(true);
